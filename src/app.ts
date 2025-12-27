@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import { Response, Request } from "express";
+import { connectDB } from "./config/mongoose.config";
 import apiRouter from "./modules/api.modules";
 dotenv.config();
 
@@ -11,14 +11,16 @@ app.use(cors());
 
 app.use(express.json());
 
-app.use("/api/v1", apiRouter)
+connectDB();
 
-app.use("/", (req: Request, res: Response) => {
-  try {
-    res.status(200).json({ message: "Test api in app file" });
-  } catch (error) {
-    console.error();
-  }
-});
+app.use("/api/v1", apiRouter);
+
+// app.use("/", (req, res) => {
+//   try {
+//     res.status(200).json({ message: "Test api in app file" });
+//   } catch (error) {
+//     console.error();
+//   }
+// });
 
 export default app;

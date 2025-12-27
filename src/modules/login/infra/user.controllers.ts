@@ -16,7 +16,7 @@ class userController {
         result: await this.service.resgisterUser(req.body),
       });
     } catch (error) {
-      //   console.log(error);
+      console.log(error);
       res.status(500).json({ message: "Internal Server Break", error });
     }
   }

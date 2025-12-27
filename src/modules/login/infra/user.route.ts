@@ -5,8 +5,8 @@ import { CreateDtoSchema } from "../domain/create.dto";
 
 const userRouter = Router();
 
-userRouter.get(
-  "/testurl",
+userRouter.post(
+  "/register",
   validate(CreateDtoSchema),
   userControllers.userLogin
 );

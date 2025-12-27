@@ -1,7 +1,10 @@
 import z from "zod";
 
 export const BaseDtoSchema = z.object({
-  mail: z.string().email(),
+  email: z.string()
+  .trim()
+  .toLowerCase()
+  .email("Email format is invalid"),
   password: z.string().min(8),
 });
 
