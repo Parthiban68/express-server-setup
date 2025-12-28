@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
 import { userRepository } from "../application/user.repository";
 import { userService } from "../application/user.services";
 
@@ -9,15 +9,14 @@ class userController {
     this.service = new userService(useRepo);
     this.userLogin = this.userLogin.bind(this);
   }
-  async userLogin(req: Request, res: Response) {
+  async userLogin(req: Request, res: Response, next: NextFunction) {
     try {
       return res.status(200).json({
         message: "user Created successfully",
         result: await this.service.resgisterUser(req.body),
       });
     } catch (error) {
-      console.log(error);
-      res.status(500).json({ message: "Internal Server Break", error });
+      next(error);
     }
   }
 }

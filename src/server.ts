@@ -1,9 +1,10 @@
 import app from "./app";
+import { envConfig } from "./config/env.config";
 
-const port: number = Number(process.env.PORT);
+const port: number = Number(envConfig.server.port);
 
 const serverWatch = () => {
-  console.log(`Server is up and Running on port : ${port}`);
+  console.info(`Server is up and Running on port : ${port}`);
 };
 
 app.listen(port, serverWatch);

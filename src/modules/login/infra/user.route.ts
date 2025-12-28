@@ -1,6 +1,6 @@
 import { Router } from "express";
 import userControllers from "./user.controllers";
-import { validate } from "@/common/common.modules";
+import { validate } from "@/common";
 import { CreateDtoSchema } from "../domain/create.dto";
 
 const userRouter = Router();

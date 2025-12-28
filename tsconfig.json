@@ -8,8 +8,10 @@
     "baseUrl": "./src",
     "paths": {
       "@/*": ["*"],
-      "@common": ["common"],
-      "@common/*": ["common/*"]
+      "@common": ["common/index.ts", "./common"],
+      "@common/*": ["common/*"],
+      "@core": ["core/index.ts", "./core"],
+      "@core/*": ["core/*"]
     }
   }
 }
