@@ -1,9 +1,16 @@
 import type { IUserRepository } from "../infra/user.repository.interface";
 import { CreateDto } from "../domain/create.dto";
-import { NotFoundError } from "@/core/errors/http.error";
+import { NotFoundError, UnauthorizedError } from "@/core/errors/http.error";
+import { LoginDto } from "../domain/login.dto";
+import { jwtServiceInstance } from "@/lib";
+import { mailServiceInstance } from "@/lib";
 
 export class userService {
-  constructor(private readonly repo: IUserRepository) {}
+  constructor(
+    private readonly repo: IUserRepository,
+    private readonly jwt: typeof jwtServiceInstance,
+    private readonly mailService: typeof mailServiceInstance
+  ) {}
   async resgisterUser(dto: CreateDto) {
     const userExist = await this.repo.findEmail(dto.email);
 
@@ -11,6 +18,35 @@ export class userService {
       throw new NotFoundError("Email already exist");
     }
 
-    return await this.repo.Register(dto);
+    await this.repo.Register(dto);
+
+    this.mailService
+      .sendMail({
+        to: dto.email,
+        subject: "Account create successfully",
+        html: `<h1>Account create successfully</h1>`,
+      })
+      .catch(console.error);
+
+    return;
+  }
+
+  async userLogin(dto: LoginDto) {
+    const userDetails = await this.repo.findEmail(dto.email);
+
+    if (!userDetails) throw new NotFoundError("provided email not found");
+
+    if (userDetails[0].email !== dto.email)
+      throw new UnauthorizedError("Invalid email or password");
+
+    if (userDetails[0].password !== dto.password)
+      throw new UnauthorizedError("Invalid email or password");
+
+    const token = this.jwt.generateJwtToken({
+      username: userDetails[0].username,
+      email: userDetails[0].email,
+    });
+
+    return token;
   }
 }

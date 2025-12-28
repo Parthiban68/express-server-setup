@@ -5,7 +5,7 @@ import timezone from "dayjs/plugin/timezone";
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
-export class DayjsService {
+class DayjsService {
   now() {
     return dayjs().format();
   }
@@ -18,3 +18,5 @@ export class DayjsService {
     return dayjs(date).tz("Asia/kolkata").format();
   }
 }
+
+export const DayjsServiceInstance = new DayjsService();
