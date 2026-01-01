@@ -1,6 +1,7 @@
 import { LoginModel } from "../domain/login.model";
 import { IUserRepository } from "../infra/user.repository.interface";
 import { CreateDto } from "../domain/create.dto";
+import { UpdateDto } from "../domain/update.dto";
 
 export class userRepository implements IUserRepository {
   constructor(private readonly loginModel = LoginModel) {}
@@ -29,5 +30,11 @@ export class userRepository implements IUserRepository {
 
   public findEmail(email: string) {
     return this.findUserDetailsByMail(email);
+  }
+
+  private async updateUserDetails(dto: UpdateDto) {}
+
+  public updateUser(dto: UpdateDto): Promise<void> {
+    return this.updateUserDetails(dto);
   }
 }

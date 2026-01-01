@@ -1,10 +1,11 @@
+import { Request, Response, NextFunction } from "express";
 import { envConfig } from "@/config/env.config";
 import {
   BadRequestError,
   NotFoundError,
   UnauthorizedError,
 } from "@/core/errors/http.error";
-import { Request, Response, NextFunction } from "express";
+import { logger } from "@/core/logger/logger";
 
 class globalError {
   private readonly isProduction = envConfig.server.enviroment === "production";
@@ -21,6 +22,14 @@ class globalError {
         success: false,
         message: err.message,
         ...(this.isProduction ? {} : { stack: err.stack }),
+      });
+    }
+
+    if (this.isProduction) {
+      logger.error({
+        success: false,
+        message: "Something went wrong",
+        stack: err.stack,
       });
     }
 
