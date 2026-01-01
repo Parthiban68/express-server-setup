@@ -1,3 +1,11 @@
-export { DayjsServiceInstance } from "./dayjs.services";
-export { jwtServiceInstance } from "./jwt.services";
-export { mailServiceInstance } from "./nodemailer.services";
+import { DayjsServiceInstance } from "./dayjs.services";
+import { jwtServiceInstance } from "./jwt.services";
+import { mailServiceInstance } from "./nodemailer.services";
+
+const lib = {
+  DayjsServiceInstance,
+  jwtServiceInstance,
+  mailServiceInstance,
+};
+
+export default lib;

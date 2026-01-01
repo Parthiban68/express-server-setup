@@ -2,14 +2,13 @@ import type { IUserRepository } from "../infra/user.repository.interface";
 import { CreateDto } from "../domain/create.dto";
 import { NotFoundError, UnauthorizedError } from "@/core/errors/http.error";
 import { LoginDto } from "../domain/login.dto";
-import { jwtServiceInstance } from "@/lib";
-import { mailServiceInstance } from "@/lib";
+import lib from "@/lib";
 
 export class userService {
   constructor(
     private readonly repo: IUserRepository,
-    private readonly jwt: typeof jwtServiceInstance,
-    private readonly mailService: typeof mailServiceInstance
+    private readonly jwt: typeof lib.jwtServiceInstance,
+    private readonly mailService: typeof lib.mailServiceInstance
   ) {}
   async resgisterUser(dto: CreateDto) {
     const userExist = await this.repo.findEmail(dto.email);

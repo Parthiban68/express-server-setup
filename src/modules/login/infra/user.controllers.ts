@@ -1,8 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { userRepository } from "../application/user.repository";
 import { userService } from "../application/user.services";
-import { jwtServiceInstance } from "@/lib";
-import { mailServiceInstance } from "@/lib";
+import lib from "@/lib";
 
 class userController {
   private readonly service: userService;
@@ -10,8 +9,8 @@ class userController {
     const useRepo = new userRepository();
     this.service = new userService(
       useRepo,
-      jwtServiceInstance,
-      mailServiceInstance
+      lib.jwtServiceInstance,
+      lib.mailServiceInstance
     );
     this.userRegister = this.userRegister.bind(this);
     this.userLogin = this.userLogin.bind(this);

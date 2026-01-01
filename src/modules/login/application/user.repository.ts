@@ -4,7 +4,8 @@ import { CreateDto } from "../domain/create.dto";
 
 export class userRepository implements IUserRepository {
   constructor(private readonly loginModel = LoginModel) {}
-  async Register(dto: CreateDto) {
+
+  private async registerUserRepo(dto: CreateDto) {
     const userData = new this.loginModel({
       username: dto.username,
       email: dto.email,
@@ -18,7 +19,15 @@ export class userRepository implements IUserRepository {
     await userData.save();
   }
 
-  async findEmail(email: string) {
+  public Register(dto: CreateDto) {
+    return this.registerUserRepo(dto);
+  }
+
+  private async findUserDetailsByMail(email: string) {
     return await this.loginModel.find({ email });
+  }
+
+  public findEmail(email: string) {
+    return this.findUserDetailsByMail(email);
   }
 }

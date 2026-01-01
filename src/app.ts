@@ -4,13 +4,18 @@ import dotenv from "dotenv";
 import db from "@/config/mongoose.config";
 import apiRouter from "./modules/api.modules";
 import { productionConsoleConfig } from "./core";
-import { globalErrorHandler } from "./common";
+import common from "./common";
+import { envConfig } from "./config/env.config";
 
 dotenv.config();
 
 const app = express();
 
-app.use(cors());
+if (envConfig.server.enviroment === "production") {
+  app.use(cors());
+} else {
+  app.use(cors());
+}
 
 app.use(express.json());
 
@@ -28,6 +33,6 @@ app.use("/api/v1", apiRouter);
 //   }
 // });
 
-app.use(globalErrorHandler.handler);
+app.use(common.globalErrorHandler.handler);
 
 export default app;
