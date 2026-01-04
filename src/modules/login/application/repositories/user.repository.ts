@@ -1,6 +1,5 @@
 import { LoginModel } from "./login.model";
 import { IUserRepository } from "../../domain/contracts/user.repository.interface";
-import { CreateDto } from "../../infra/dto/create.dto";
 import { UpdateDto } from "../../infra/dto/update.dto";
 import { user } from "../../domain/entities/user.entity";
 
